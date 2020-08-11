@@ -1,4 +1,4 @@
-package com.example.newweb;
+package com.example.newweb.controller;
 
 import com.example.newweb.domain.Message;
 import com.example.newweb.repository.MessageRepo;
@@ -13,11 +13,16 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class GreetingController {
+public class MainController {
     @Autowired
     private MessageRepo messageRepo;
 
-    @GetMapping
+    @GetMapping("/")
+    public String greeting(Map<String, Object> model) {
+        return "greeting";
+    }
+
+    @GetMapping("/main")
     public String main(Map<String, Object> model) {
         Iterable<Message> messages = messageRepo.findAll();
 
@@ -26,7 +31,7 @@ public class GreetingController {
         return "main";
     }
 
-    @PostMapping
+    @PostMapping("/main")
     public String add(@RequestParam String text, @RequestParam String tag, Map<String, Object> model) {
         Message message = new Message(text, tag);
 
