@@ -1,4 +1,4 @@
-package com.example.newweb.securingweb;
+package com.example.newweb.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -36,8 +36,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .passwordEncoder(NoOpPasswordEncoder.getInstance())
-                .usersByUsernameQuery("select username, password, active from usr")
-                .authoritiesByUsernameQuery("select usr.username, user_role.roles from usr join user_role on usr.id = user_role.user");
+                .usersByUsernameQuery("select username, password, active from usr where username=?")
+                .authoritiesByUsernameQuery("select usr.username, user_role.roles from usr join user_role on usr.id = user_role.user_id where usr.username=?");
 
     }
 }
